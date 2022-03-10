@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> 
+    <center>
+        <h1>Employee DataBase</h1>
+    </center>
+    <div id="container">
+    <input type="text" size="1" disabled value="1" id="id" ><input type="text" placeholder="Name" id="name" required><input type="number" placeholder="Salary" id="salary"required><select name="department" id="depart">
+        <option value="">Department</option>
+        <option value="Java Devloper">Java Devloper</option>
+        <option value="node.JS Devloper">node.JS Devloper</option>
+        <option value=".net Devloper">DotNet Devloper</option>
+        <option value="C# Devloper">C# Devloper</option>
+    </select>
+    <input type="radio" name="type" id="pT" value="pT">Part Time<input type="radio" id="fT" name="type" value="fT">Full Time
+    <button id="Add" onclick="addEmp()">Add</button><button onclick="remEmp()">Part Time</button><button id="data" onclick="show()">Full Data</button>
+</div>
+<p id="msg"></p>
+<p id="msg2"></p>
+<p id="warn"></p>
+
+</div>
+<script>
+        var arrPt=[]
+        var arrFt=[]
+        var tbl2=`<table border="1" width="600"><tr> <th>Employee Name</th> <th> Id </th> <th>  Salary </th> <th> Department </th><th>Job Type</th><th> Update</th><th> Remove</th></tr>`
+        var eId=document.getElementById("id").value
+        eId=1
+        function partTimeEmp(id,name,salary,department){
+            this.id=id;
+            this.name=name;
+            this.salary=salary;
+            this.department=department;
+            this.jobType="Part Time"
+            Object.defineProperty(this,"fullDetail",{
+            get:function(){
+                let tbl=`<table border="1" width="600"><tr> <th>Employee Name</th> <th> Id </th> <th>  Salary </th> <th> Department </th><th>Job Type</th> </tr>`
+        
+                 tbl+=` <tr><th>${this.name}</th> <th>  ${this.id} </th> <th>${this.salary + "₹"}</th>  <th>${this.department}</th><th> ${this.jobType} </th></tr>`
+                return tbl;
+            }
+        })
+
+        }
+        function fullTimeEmp (id,name,salary,department){
+            this.id=id;
+            this.name=name;
+            this.salary=salary;
+            this.department=department;
+            this.jobType="Full Time";
+        Object.defineProperty(this,"fullDetail",{
+            get:function(){
+                let tbl=`<table border="1" width="600"><tr> <th>Employee Name</th> <th> Id </th> <th>  Salary </th> <th> Department </th><th>Job Type</th> </tr>`
+        
+                 tbl+=` <tr><th>${this.name}</th> <th>  ${this.id} </th> <th>${this.salary + "₹"}</th>  <th>${this.department}</th> <th> ${this.jobType} </th></tr>`
+                return tbl;
+            }
+        })
+        }
+        function addEmp(){
+            document.getElementById("warn").innerHTML=""
+            document.getElementById("msg2").innerHTML=""
+            var eN =document.getElementById("name").value
+            var eS=document.getElementById("salary").value
+            var eD=document.getElementById("depart").value
+            const radioButtons = document.querySelectorAll('input[name="type"]');
+            for (const radioButton of radioButtons) {
+                if (radioButton.checked) {
+                    selectedType = radioButton.value;
+                    break;
+                }
+            }
+            if(selectedType=="pT"){
+            const emp= new partTimeEmp(eId,eN,eS,eD)
+            eId++
+            document.getElementById("msg").innerHTML=emp.fullDetail
+            document.getElementById("id").value=eId
+            arrPt.push(emp)
+            
+            }
+           else{
+                const emp= new fullTimeEmp(eId,eN,eS,eD)
+                eId++
+            document.getElementById("msg").innerHTML=emp.fullDetail
+            document.getElementById("id").value=eId
+            arrFt.push(emp)
+           
+            }
+        }
+        
+        function show(){
+            var fullData=arrPt.concat(arr)
+            if(fullData.length>0 && document.getElementById("msg2").innerHTML==""){
+            fullData.forEach(x => {
+                tbl2+=` <tr><th>${x.name}</th> <th>  ${x.id} </th> <th>${x.salary + "₹"}</th>  <th>${x.department}</th><th> ${x.jobType}</th><th><button id="update">Update</button></th> 
+                   <th> <button id="remove">Remove</button></th></tr>`   
+            });
+            document.getElementById("msg").innerHTML=""
+            document.getElementById("msg2").innerHTML=tbl2
+            }
+            else{
+
+                document.getElementById("warn").innerHTML="<b>No data found"
+            }
+        }
+        
+    </script>
+</body>
+</html>
