@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+const employee = function(name ,age , id, salary){
+         this.Name=name;
+         this.Age=age;
+         this.Id=id;
+         this.Salary=salary;
+       }
+employee.prototype.FullDetails=function()
+{console.log(`name ${this.Name} age ${this.Age} id ${this.Id} salary ${this.Salary}`)}
+
+
+employee.prototype.Full_Details=function()
+{console.log(`name ${this.Name} age ${this.Age} id ${this.Id} class ${this.sclass}`)}
+
+function Student(name ,age , id, sclass){
+    employee.call(this,name,id,age)
+    this.sclass=sclass;
+}
+
+    
+    function teacher(name ,age , id, salary){
+        employee.call(this, name,age,id,salary)
+    }
+
+teacher.prototype=Object.create(employee.prototype)
+Student.prototype=Object.create(employee.prototype)
+
+const obj1 = new teacher("UTKARSH GANGAL" ,"22year" ,3545,55000) 
+const obj2 = new Student("AKkash" ,"18year" ,3525,"javascript") 
+
+obj1.FullDetails()
+obj2.FullDetails()
+
+    </script>
+</body>
+</html>
